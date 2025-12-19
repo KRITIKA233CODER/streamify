@@ -1,9 +1,9 @@
 import { useState } from "react";
 import { ShipWheelIcon } from "lucide-react";
-import { Link } from "react-router";
-import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { signup } from "../lib/api.js";
-//import useSignUp from "../hooks/useSignUp";
+import { Link } from "react-router-dom";
+//import { useMutation, useQueryClient } from "@tanstack/react-query";
+//import { signup } from "../lib/api.js";
+import useSignUp from "../hooks/useSignUp";
 
 
 const SignUpPage = () => {
@@ -14,21 +14,23 @@ const SignUpPage = () => {
   });
 
   //This is how we did it at first, without using our custom hook
-  const queryClient = useQueryClient();
-  const {
-    mutate: signupMutation,
-    isPending,
-    error,
-  } = useMutation({
-    mutationFn: signup,
-    onSuccess: () => {
-  queryClient.refetchQueries({ queryKey: ["authUser"] });
-  navigate("/onboarding");
-}
-  });
+  //const queryClient = useQueryClient();
+  //const navigate = useNavigate();
+  
+  // const {
+  //   mutate: signupMutation,
+  //   isPending,
+  //   error,
+  // } = useMutation({
+  //   mutationFn: signup,
+  //   onSuccess: () => {
+  //     queryClient.refetchQueries({ queryKey: ["authUser"] });
+  //     navigate("/onboarding");
+  //   }
+  // });
 
   // This is how we did it using our custom hook - optimized version
- // const { isPending, error, signupMutation } = useSignUp();
+   const { isPending, error, signupMutation } = useSignUp();
 
   const handleSignup = (e) => {
     e.preventDefault();
@@ -104,7 +106,7 @@ const SignUpPage = () => {
                     </label>
                     <input
                       type="password"
-                      placeholder="********"
+                      placeholder=""
                       className="input input-bordered w-full"
                       value={signupData.password}
                       onChange={(e) => setSignupData({ ...signupData, password: e.target.value })}

@@ -1,4 +1,4 @@
-import { Navigate, Route, Routes } from "react-router";
+import { Navigate, Route, Routes } from "react-router-dom";
 
 import HomePage from "./pages/HomePage";
 import CallPage from "./pages/CallPage";
@@ -14,11 +14,18 @@ import useAuthUser from "./hooks/useAuthUser.js";
 //import{getAuthUser} from "./lib/api.js";
 //import{useQuery} from '@tanstack/react-query'
 //import {axiosInstance} from "./lib/axios.js";
+import Layout from "./components/Layout.jsx";
+//import { theme } from "./lib/theme.js";
+//import { useState } from "react";
+import { useThemeStore } from "./store/useThemeStore.js";
+
 
 
 const App=()=>{
   
-  const { data: authUser, isLoading } = useAuthUser();
+  const { isLoading,authUser } = useAuthUser();
+  const { theme } = useThemeStore();
+
   const isAuthenticated=Boolean(authUser);
   const isOnboarded=authUser?.isOnboarded;
 
@@ -28,9 +35,8 @@ if(isLoading)
   return <PageLoader/>;
 
 
-  return(
-    <div className="h-screen" data-theme="forest">
-      
+  return (
+    <div className="h-screen" data-theme={theme}>
       <Routes>
         <Route
           path="/"
@@ -57,11 +63,23 @@ if(isLoading)
           }
         />
         <Route
+          path="/friends"
+          element={
+            isAuthenticated && isOnboarded ? (
+              <Layout showSidebar={true}>
+                <HomePage />
+              </Layout>
+            ) : (
+              <Navigate to={!isAuthenticated ? "/login" : "/onboarding"} />
+            )
+          }
+        />
+        <Route
           path="/notifications"
           element={
             isAuthenticated && isOnboarded ? (
               <Layout showSidebar={true}>
-                <NotificationsPage />
+                <NotificationPage />
               </Layout>
             ) : (
               <Navigate to={!isAuthenticated ? "/login" : "/onboarding"} />
@@ -106,12 +124,10 @@ if(isLoading)
             )
           }
         />
-
       </Routes>
-      <Toaster/>
 
+      <Toaster />
     </div>
-    
-  )
-}
-export default App
+  );
+};
+export default App;

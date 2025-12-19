@@ -23,7 +23,7 @@ export async function getRecommendedUsers(req, res) {
 
 export async function getMyFriends(req, res) {
     try{
-        const user=await User.findById(req.user.id)
+        const user=await User.findById(req.user._id)
         .select("friends")
         .populate("friends","fullName profilePics nativeLanguage learningLanguage ");
 
@@ -84,7 +84,7 @@ export async function acceptFriendRequest(req,res){
             return res.status(404).json({message:"Friend request not found"});
         }
 
-        if(friendRequest.recipient.toString()!==req.user._id){
+        if(friendRequest.recipient.toString() !== req.user._id.toString()){
             return res.status(403).json({message:"You are not authorized to accept this friend request"});
         }
 
@@ -108,17 +108,17 @@ export async function acceptFriendRequest(req,res){
 export async function getFriendRequests(req,res){
     try{
         //const myId = req.user._id;
-        const incominfReqs = await FriendRequest.find({
-            recipient: req.user.id,
+        const incomingReqs = await FriendRequest.find({
+            recipient: req.user._id,
              status: "pending"
             }).populate("sender", "fullName profilePics nativeLanguage learningLanguage");
 
-        const acceptReqs = await FriendRequest.find({
-            sender: req.user.id,
+        const acceptedReqs = await FriendRequest.find({
+            sender: req.user._id,
              status: "accepted"
             }).populate("recipient", "fullName profilePics");
 
-        res.status(200).json({incominfReqs,acceptReqs});
+        res.status(200).json({incomingReqs,acceptedReqs});
     }catch(error){
         console.error("Error fetching friend requests:",error);
         res.status(500).json({message:"Server error while fetching friend requests"});
@@ -128,7 +128,7 @@ export async function getFriendRequests(req,res){
 export async function getOutgoingFriendReqs(req,res){
     try{
         const outgoingRequests = await FriendRequest.find({
-            sender: req.user.id,
+            sender: req.user._id,
              status: "pending"
             }).populate("recipient", "fullName profilePics nativeLanguage learningLanguage");  
 
