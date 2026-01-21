@@ -13,7 +13,7 @@ const PORT = process.env.PORT || 5000;
 
 const allowedOrigins = [
   "http://localhost:5173",
-  "https://streamify-git-main-kritika-niranjan-dangis-projects.vercel.app"
+  "https://streamify-chi-six.vercel.app/"
 ];
 
 app.use(
