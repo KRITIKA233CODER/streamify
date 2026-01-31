@@ -49,12 +49,15 @@ A full-stack video calling and real-time chat application built with the MERN st
    ```bash
    git clone https://github.com/yourusername/mern-video-chat-app.git
    cd mern-video-chat-app
+
 2.**Install server dependencies**
   cd server
   npm install
+
 3.**Install client dependencies**
   cd ../client
   npm install
+
 4.**Environment Variables**
  PORT=5000
 MONGO_URI=your_mongodb_connection_string
@@ -64,13 +67,16 @@ CLOUDINARY_API_KEY=your_api_key
 CLOUDINARY_API_SECRET=your_api_secret
 Create a .env file in the client directory:
 REACT_APP_SERVER_URL=http://localhost:5000
+
 5.**Run the application**
   Start the server (from server directory):
   npm run dev
   Start the client (from client directory):
+
 6. **npm start**
   Open the app
   Navigate to http://localhost:3000
+
 🎯 **Usage**
 Register/Login - Create an account or sign in with existing credentials
 Dashboard - View list of online users
@@ -78,11 +84,13 @@ Start Chat - Click on a user to open chat window
 Video Call - Click the video icon to initiate a video call
 Accept/Decline - Incoming calls show notification with options
 Media Sharing - Send images in chat using the attachment button
+
 🖼️ **Screenshots**
 Add screenshots of your application here
 screenshots/login.png
 screenshots/chat.png
 screenshots/video-call.png
+
 🙏 **Acknowledgments**
 Socket.IO for real-time communication
 WebRTC for peer-to-peer video calling
