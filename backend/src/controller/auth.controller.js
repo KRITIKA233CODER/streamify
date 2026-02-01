@@ -47,10 +47,16 @@ try{
       
       const token = jwt.sign({userId:newUser._id},process.env.JWT_SECRET_KEY,{expiresIn:'7d'});
 
+      // res.cookie("jwt",token,{
+      //   httpOnly:true,
+      //   secure:process.env.NODE_ENV==='production',
+      //   sameSite:'Lax',
+      //   maxAge:7*24*60*60*1000
+      // });
       res.cookie("jwt",token,{
         httpOnly:true,
-        secure:process.env.NODE_ENV==='production',
-        sameSite:'Lax',
+        secure:true,
+        sameSite:'None',
         maxAge:7*24*60*60*1000
       });
 
